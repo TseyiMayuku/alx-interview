@@ -11,7 +11,6 @@
 
 
 def minOperations(n):
-
     """
     function returns the minimum operations to get n H's
     """
