@@ -1,24 +1,41 @@
 #!/usr/bin/python3
 
-'''Minimum Operations Challenge or task'''
+
+''' A module that returns the minimum Operations it takes to
+    get to n characters.
+
+    Available operations:
+        copy
+        paste
+'''
 
 
-def minOperations(n: int) -> int:
+def minOperations(n):
+    '''
+    function returns the minimum operations to get n H's
+    '''
+    min_operations = 0
 
-    """
-    Calculate the fewest number of operations needed to result in exactly n H characters in the file.
-    :param n: the number of H characters to produce
-    :return: the fewest number of operations needed, or 0 if n is impossible to achieve
-    """
-    
-    if n < 1:
-        return 0
-    if n == 1:
-        return 0
-    # Find the largest factor of n
-    for i in range(n // 2, 0, -1):
-        if n % i == 0:
-            # Recursively calculate the number of operations needed
-            return minOperations(i) + (n // i)
-    # If no factors are found, n is prime and cannot be achieved
-    return 0
+    if n <= 1:
+        return min_operations
+
+    for i in range(2, n + 1):
+        while n % i == 0:
+            min_operations += i
+            n /= i
+
+    return min_operations
+
+
+if __name__ == '__main__':
+    from random import randint
+    from time import time
+
+    start_time = time()
+
+    for i in range(10):
+        n = randint(2, 100)
+        print("Min # of operations to reach {} char: {}".
+              format(n, minOperations(n)))
+
+    print(f'==> Program completed in {time() - start_time:.3f}s')
