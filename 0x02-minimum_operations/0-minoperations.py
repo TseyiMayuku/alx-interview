@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 
 
-''' A module that returns the minimum Operations it takes to
+"""A module that returns the minimum Operations it takes to
     get to n characters.
 
     Available operations:
         copy
         paste
-'''
+"""
 
 
 def minOperations(n):
 
-    '''
+    """
     function returns the minimum operations to get n H's
-    '''
+    """
 
     min_operations = 0
 
