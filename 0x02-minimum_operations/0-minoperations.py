@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 '''Minimum Operations Challenge or task'''
 
+
 def minOperations(n: int) -> int:
     """
     Calculate the fewest number of operations needed to result in exactly n H characters in the file.
     :param n: the number of H characters to produce
     :return: the fewest number of operations needed, or 0 if n is impossible to achieve
     """
+    
     if n < 1:
         return 0
     if n == 1:
