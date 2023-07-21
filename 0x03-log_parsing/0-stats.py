@@ -1,43 +1,37 @@
 #!/usr/bin/python3
-'''Script for Log parsing'''
+'''a script which reads stdin line by line and computes metrics'''
+
 
 import sys
 
-STATUS_CODES = {
-    '200': 0, 
-    '301': 0, 
-    '400': 0, 
-    '401': 0,
-    '403': 0, 
-    '404': 0, 
-    '405': 0, 
-    '500': 0
-}
+cache = {'200': 0, '301': 0, '400': 0, '401': 0,
+         '403': 0, '404': 0, '405': 0, '500': 0}
 total_size = 0
-line_count = 0
+counter = 0
 
 try:
     for line in sys.stdin:
-        fields = line.strip().split(" ")
-        if len(fields) >= 3:
-            status = fields[-2]
-            size = int(fields[-1])
-            if status in STATUS_CODES:
-                STATUS_CODES[status] += 1
+        line_list = line.split(" ")
+        if len(line_list) > 4:
+            code = line_list[-2]
+            size = int(line_list[-1])
+            if code in cache.keys():
+                cache[code] += 1
             total_size += size
-            line_count += 1
+            counter += 1
 
-        if line_count % 10 == 0:
-            print('Total file size: {}'.format(total_size))
-            for code in sorted(STATUS_CODES):
-                if STATUS_CODES[code] > 0:
-                    print('{}: {}'.format(code, STATUS_CODES[code]))
+        if counter == 10:
+            counter = 0
+            print('File size: {}'.format(total_size))
+            for key, value in sorted(cache.items()):
+                if value != 0:
+                    print('{}: {}'.format(key, value))
 
-except Exception as e:
+except Exception as err:
     pass
 
 finally:
-    print('Total file size: {}'.format(total_size))
-    for code in sorted(STATUS_CODES):
-        if STATUS_CODES[code] > 0:
-            print('{}: {}'.format(code, STATUS_CODES[code]))
+    print('File size: {}'.format(total_size))
+    for key, value in sorted(cache.items()):
+        if value != 0:
+            print('{}: {}'.format(key, value))
